@@ -21,15 +21,15 @@ export class FullCalendarService {
     }
 
     getAgenda(): Observable<ICalendar[]> {
-      return this.http.get<ICalendar[]>(`${this.myAppUrl}/${this.myApiUrl}`);
+      return this.http.get<ICalendar[]>(`${this.myAppUrl}${this.myApiUrl}`);
     }
 
     addEvent(event: ICalendar): Observable<void> {
-      return this.http.post<void>(`${this.myAppUrl}/${this.myApiUrl}`, event);
+      return this.http.post<void>(`${this.myAppUrl}${this.myApiUrl}`, event);
     }
 
 
     deleteEvent(id: number): Observable<void> {
-      return this.http.delete<void>(`${this.myAppUrl}/${this.myApiUrl}/${id}`);
+      return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}/${id}`);
     }
 }
