@@ -16,13 +16,23 @@ export class FullCalendarService {
 
     this.myAppUrl = environment.endpoint;
     console.log(this.myAppUrl)
-    this.myApiUrl = 'api/events';
+    this.myApiUrl = 'api/full-calendar';
     console.log(this.myApiUrl)
     }
 
-    getAgenda(): Observable<ICalendar[]> {
-      return this.http.get<ICalendar[]>(`${this.myAppUrl}${this.myApiUrl}`);
+    getAgenda(start?: string, end?: string): Observable<ICalendar[]> {
+      let params = '';
+      if (start && end) {
+        params = `?start=${start}&end=${end}`;
+      }
+
+      const apiUrl = `${this.myAppUrl}${this.myApiUrl}${params}`;
+      console.log('🔍 Cridant API:', apiUrl); // 👈 Això mostrarà l'URL complet
+
+      return this.http.get<ICalendar[]>(apiUrl);
     }
+
+
 
     addEvent(event: ICalendar): Observable<void> {
       return this.http.post<void>(`${this.myAppUrl}${this.myApiUrl}`, event);

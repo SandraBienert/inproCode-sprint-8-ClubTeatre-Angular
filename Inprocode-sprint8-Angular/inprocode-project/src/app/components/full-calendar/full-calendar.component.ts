@@ -3,7 +3,7 @@ import { FullCalendarComponent } from '@fullcalendar/angular';
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { FullCalendarModule } from '@fullcalendar/angular'; // Import FullCalendarModule
-import { CalendarOptions, EventClickArg, EventInput } from '@fullcalendar/core';
+import { CalendarOptions, EventClickArg } from '@fullcalendar/core';
 import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -25,28 +25,37 @@ export class AppFullCalendarComponent implements AfterViewInit {
   constructor(private fullCalendarService: FullCalendarService ){}
 
    // Opciones de configuración del calendario
-    calendarOptions: CalendarOptions = {
+  calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth', // Vista inicial: mes
-    plugins: [dayGridPlugin, interactionPlugin, listPlugin], // Usa el plugin de vista de cuadrícula por días
-    weekends: false,
+    plugins: [dayGridPlugin, interactionPlugin, listPlugin], // Usa el plugin de vista de cuadrícula per dies
+    weekends: true,
     dateClick: (arg) => this.handleDateClick(arg),
     eventClick: (clickInfo) => this.handleEventClick(clickInfo),
-    events: (fetchInfo, successCallback) => { // Carrega events dinàmicament
-      this.fullCalendarService.getAgenda().subscribe((events: ICalendar[]) => {
-        const formattedEvents = events.map(event => ({
-          id: event.id.toString(),
-          title: event.titol,
-          lloc: event.lloc,
-          date: event.data,
-        }));
-        successCallback(formattedEvents);
+    events: (fetchInfo, successCallback, failureCallback) => {
+      console.log('🔍 Fetching events for range:', fetchInfo.start, 'to', fetchInfo.end);
+
+      this.fullCalendarService.getAgenda(fetchInfo.startStr).subscribe({
+        next: (events: ICalendar[]) => {
+          const formattedEvents = events.map(event => ({
+            id: event.id.toString(),
+            title: event.titol,
+            start: event.data
+          }));
+
+          successCallback(formattedEvents);
+        },
+        error: (error) => {
+          console.error('❌ Error carregant els esdeveniments:', error);
+          failureCallback(error);
+        }
       });
     }
-  }
+  };
+
 
   handleEventClick(clickInfo: EventClickArg) {
     if (confirm(`Eliminar "${clickInfo.event.title}"?`)) {
-      const eventId = Number(clickInfo.event.id); // Convertim a number
+      const eventId = Number(clickInfo.event.id); // C, fetchInfo.endStronvertim a number
       this.fullCalendarService.deleteEvent(eventId).subscribe({
         next: () => this.calendarApi.refetchEvents(),
         error: (err) => console.error('Error eliminant event:', err)
@@ -71,8 +80,11 @@ export class AppFullCalendarComponent implements AfterViewInit {
       }
     }
     ngAfterViewInit() {
-      this.calendarApi = this.calendarComponent.getApi(); // <--- Canvi clau aquí
+      setTimeout(() => {
+        this.calendarApi = this.calendarComponent.getApi();
+      });
     }
+
 
 
 }
