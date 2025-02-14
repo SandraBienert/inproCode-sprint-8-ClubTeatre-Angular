@@ -23,9 +23,9 @@ const crearEvent = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     const { titol, lloc, data } = req.body;
     try {
         const nouEvent = yield calendari_1.default.create({
-            title: titol,
-            lloc: lloc,
-            data: data,
+            titol_event: titol,
+            lloc_event: lloc,
+            data_event: data,
         });
         res.json(nouEvent);
     }
@@ -35,7 +35,6 @@ const crearEvent = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 });
 exports.crearEvent = crearEvent;
 const eliminarEvent = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { titol, lloc, data } = req.body;
     // Endpoint: Eliminar event
     try {
         yield calendari_1.default.destroy({ where: { id: req.params.id } });

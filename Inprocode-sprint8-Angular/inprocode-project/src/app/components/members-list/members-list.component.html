@@ -19,10 +19,10 @@
   </thead>
   <tbody>
     <tr *ngFor="let member of membersList" class="table-active">
-      <td class="ps-4">{{member.name}}</td>
-      <td class="ps-4">{{member.surname}}</td>
-      <td class="ps-4">{{member.rol}}</td>
-      <td class="ps-4">{{member.payroll}}€</td>
+      <td class="ps-4">{{members.nom}}</td>
+      <td class="ps-4">{{members.cognom}}</td>
+      <td class="ps-4">{{members.rol}}</td>
+      <td class="ps-4">{{members.payroll}}€</td>
       <td class="ps-4">
         <button [routerLink]="['/edit', member.id]" type="button" class="btn btn-secondary btn-sm ms-3">Editar</button>
         <button (click)="deleteMember(member.id!)" type="button" class="btn btn-danger btn-sm ms-3">Eliminar</button>

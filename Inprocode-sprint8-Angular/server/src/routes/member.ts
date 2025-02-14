@@ -12,9 +12,10 @@ router.post('/', postMember);
 router.put('/:id', updateMember);
 router.delete('/:id', (req, res, next) => {
   deleteMember(req, res, next).catch(next); // 👈 Manejo explícito de errores
+});
 
 router.get('api/map', getMapTeatres);
-router.get('api/events', getAgenda);
-});
+router.get('api/full-calendar', getAgenda);
+
 
 export default router;  

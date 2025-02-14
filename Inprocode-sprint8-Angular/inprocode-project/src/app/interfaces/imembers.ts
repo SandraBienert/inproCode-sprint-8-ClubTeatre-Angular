@@ -1,8 +1,8 @@
 
 export interface Imembers {
   id: number;
-  name: string;
-  surname: string;
+  nom: string;
+  cognom: string;
   rol: string;
   payroll: number;
 

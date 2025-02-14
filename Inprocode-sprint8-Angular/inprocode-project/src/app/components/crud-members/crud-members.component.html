@@ -6,12 +6,12 @@
     <div class="card-header fs-3 text-center">{{operation}} Membre</div>
     <div class="card-body">
       <form [formGroup]="form" (ngSubmit)="addMember()">
-      <input formControlName="name" type="text" class="form-control fs-5" placeholder="Escriu el nom"/>
-      <span *ngIf="form.get('name')?.hasError('required') && form.get('name')?.touched" class="text-danger">
+      <input formControlName="nom" type="text" class="form-control fs-5" placeholder="Escriu el nom"/>
+      <span *ngIf="form.get('nom')?.hasError('required') && form.get('nom')?.touched" class="text-danger">
         ¡El camp nom és <strong>necessari</strong>!"
       </span>
-      <input formControlName="surname" type="text" class="form-control mt-2 fs-5" placeholder="Escriu el cognom"/>
-      <span *ngIf="form.get('surname')?.hasError('required') && form.get('surname')?.touched" class="text-danger">
+      <input formControlName="cognom" type="text" class="form-control mt-2 fs-5" placeholder="Escriu el cognom"/>
+      <span *ngIf="form.get('cognom')?.hasError('required') && form.get('cognom')?.touched" class="text-danger">
         ¡El camp cognom és <strong>necessari</strong>!"
       </span>
       <input formControlName="rol" type="text" class="form-control mt-2 fs-5" placeholder="Escriu el rol que exerceix a la companyia"/>

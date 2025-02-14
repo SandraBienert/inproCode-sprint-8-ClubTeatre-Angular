@@ -3,7 +3,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormBuilder, FormGroup, Validators , ReactiveFormsModule} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Imembers } from '../../interfaces/imembers';
-import { MembersService } from '../../services/members.service';
+import { membersService } from '../../services/members.service';
 import { ProgressBarComponent } from "../../shared/progress-bar/progress-bar.component";
 import { ToastrService } from 'ngx-toastr';
 
@@ -20,16 +20,16 @@ export class CrudMembersComponent implements OnInit {
   loading: boolean = false;
   id: number;
   operation: string = 'Agregar ';
-  private _memberService: any;
+
 
   constructor(private fb: FormBuilder,
-    private _membersService: MembersService,
+    private membersService: membersService,
     private router: Router,
     private toastr : ToastrService,
     private aRouter: ActivatedRoute) {
     this.form = this.fb.group({
-        name: ['', Validators.required],
-        surname: ['', Validators.required],
+        nom: ['', Validators.required],
+        cognom: ['', Validators.required],
         rol:[ '', Validators.required],
         payroll: [null, Validators.required],
       });
@@ -39,10 +39,10 @@ export class CrudMembersComponent implements OnInit {
   ngOnInit(): void {
     if(this.id !== 0) {
       this.operation = 'Editar ';
-      this._membersService.getMember(this.id).subscribe(data => {
+      this.membersService.getMember(this.id).subscribe((data) => {
         this.form.patchValue({
-          name: data.name,
-          surname: data.surname,
+          nom: data.nom,
+          cognom: data.cognom,
           rol: data.rol,
           payroll: data.payroll
         });
@@ -54,12 +54,12 @@ export class CrudMembersComponent implements OnInit {
 
   getMember(id: number) {
     this.loading = true;
-    this._membersService.getMember(id).subscribe((data: Imembers) => {
+    this.membersService.getMember(id).subscribe((data: Imembers) => {
     console.log(data);
     this.loading = false;
     this.form.setValue({
-      name: data.name,
-      surname: data.surname,
+      nom: data.nom,
+      cognom: data.cognom,
       rol: data.rol,
       payroll: data.payroll
     });
@@ -69,8 +69,8 @@ export class CrudMembersComponent implements OnInit {
   addMember() {
     const member : Imembers = {
       id: this.id,
-      name: this.form.get('name')?.value,
-      surname: this.form.get('surname')?.value,
+      nom: this.form.get('nom')?.value,
+      cognom: this.form.get('cognom')?.value,
       rol: this.form.get('rol')?.value,
       payroll: this.form.get('payroll')?.value,
     }
@@ -79,14 +79,14 @@ export class CrudMembersComponent implements OnInit {
 
     if(this.id !== 0) {
       member.id = this.id;
-      this._membersService.updateMember(this.id, member).subscribe(() => {
-      this.toastr.info(`El membre ${member.name} ha estat actualitzat correctament`, `Membre actualitzat`);
+      this.membersService.updateMember(this.id, member).subscribe(() => {
+      this.toastr.info(`El membre ${member.nom} ha estat actualitzat correctament`, `Membre actualitzat`);
       this.loading = false;
       this.router.navigate(['/members-list']);
 });
     } else {
-      this._membersService.saveMember(member).subscribe(() => {
-      this.toastr.success(`El membre ${member.name} ha estat registrat correctament`, `Membre registrat`);
+      this.membersService.saveMember(member).subscribe(() => {
+      this.toastr.success(`El membre ${member.nom} ha estat registrat correctament`, `Membre registrat`);
       this.loading = false;
       this.router.navigate(['/members-list']);
     });

@@ -12,7 +12,7 @@ router.post('/', member_1.postMember);
 router.put('/:id', member_1.updateMember);
 router.delete('/:id', (req, res, next) => {
     (0, member_1.deleteMember)(req, res, next).catch(next); // 👈 Manejo explícito de errores
-    router.get('api/map', mapTeatres_1.getMapTeatres);
-    router.get('api/events', calendari_1.getAgenda);
 });
+router.get('api/map', mapTeatres_1.getMapTeatres);
+router.get('api/full-calendar', calendari_1.getAgenda);
 exports.default = router;

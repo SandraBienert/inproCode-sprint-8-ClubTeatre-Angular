@@ -1,11 +1,11 @@
 import { DataTypes } from 'sequelize';
 import db from '../db/connection';
 
-const Member = db.define('Membres', { 
-  name: {
+const Member = db.define('membres', { 
+  nom: {
     type: DataTypes.STRING,
   },
-  surname: {
+  cognom: {
     type: DataTypes.STRING,
   },
   rol: {

@@ -15,7 +15,7 @@ export class MapTeatresService {
     this.myAppUrl = environment.endpoint;
     console.log(this.myAppUrl)
     this.myApiUrl = 'api/map'; // ← Canviat sense barra final
-   console.log(this.myAppUrl)
+   console.log(this.myApiUrl)
   }
 
   getMapTeatres(): Observable<MapTeatres[]> {

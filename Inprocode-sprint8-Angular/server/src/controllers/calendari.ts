@@ -1,7 +1,7 @@
 
 import { Request, Response } from 'express';
 import agenda from '../models/calendari';
-import calendari from '../db/connection'
+
 
 export const getAgenda = async (req: Request, res: Response) => {
     const listAgendaEvents = await agenda.findAll()
@@ -14,9 +14,9 @@ export const  crearEvent = async(req: Request, res: Response) =>{
 
   try {
     const nouEvent = await agenda.create({
-      title: titol,
-      lloc: lloc,
-      data: data,
+      titol_event: titol,
+      lloc_event: lloc,
+      data_event: data,
     });
 
     res.json(nouEvent);
@@ -25,7 +25,6 @@ export const  crearEvent = async(req: Request, res: Response) =>{
   }
 }  
    export const eliminarEvent = async (req: Request, res: Response) =>{
-    const { titol, lloc, data } = req.body;
   // Endpoint: Eliminar event
   try {
     await agenda.destroy({ where: { id: req.params.id } });

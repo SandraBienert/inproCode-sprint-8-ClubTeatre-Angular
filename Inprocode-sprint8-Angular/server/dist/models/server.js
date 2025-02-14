@@ -44,17 +44,19 @@ class Server {
                 res.status(500).json({ error: 'Error en la consulta' });
             });
         });
-        this.app.use('/api/map', member_1.default);
-        this.app.get('/api/events', (req, res) => {
-            connection_1.default.query('SELECT titol, lloc, data FROM calendari_debuts')
-                .then((results) => {
-                res.json(results); // ← Assegura't que results és un array
-            })
-                .catch((error) => {
-                res.status(500).json({ error: 'Error en la consulta' });
-            });
-        });
-        this.app.use('/api/events', member_1.default);
+        this.app.get('/api/full-calendar', (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const [results] = yield connection_1.default.query(`
+      SELECT id, titol_event AS titol, lloc_event AS lloc, data_event AS data 
+      FROM membres.calendari_debuts
+    `);
+                res.json(results);
+            }
+            catch (error) {
+                console.error('Error en la consulta:', error);
+                res.status(500).json({ error: 'Error en la consulta', details: error });
+            }
+        }));
     }
     midlewares() {
         this.app.use(express_1.default.json()); //parseamos el body a json

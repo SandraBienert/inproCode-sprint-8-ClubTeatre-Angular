@@ -39,19 +39,20 @@ class Server {
           res.status(500).json({ error: 'Error en la consulta' });
         });
 })
-    this.app.use('/api/map', routesMember);
-   
-    this.app.get('/api/events', (req: Request, res: Response) => {
-      db.query('SELECT titol, lloc, data FROM calendari_debuts')
-        .then((results: any) => {
-          res.json(results); // ← Assegura't que results és un array
-        })
-        .catch((error: any) => {
-          res.status(500).json({ error: 'Error en la consulta' });
-        });
-})
 
-    this.app.use('/api/events', routesMember);
+this.app.get('/api/full-calendar', async (req: Request, res: Response) => {
+  try {
+    const [results] = await db.query(`
+      SELECT id, titol_event AS titol, lloc_event AS lloc, data_event AS data 
+      FROM membres.calendari_debuts
+    `);
+    res.json(results);
+  } catch (error) {
+    console.error('Error en la consulta:', error);
+    res.status(500).json({ error: 'Error en la consulta', details: error });
+  }
+});
+
 
 }
 
@@ -69,9 +70,8 @@ class Server {
     } catch (error) {
       console.log('Error connecting to the database: ', error);
     }
+
 }
-
-
 }
 
 export default Server;

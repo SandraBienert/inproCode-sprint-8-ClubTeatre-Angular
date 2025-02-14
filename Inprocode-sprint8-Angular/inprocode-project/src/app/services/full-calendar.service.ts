@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, Observable, tap, throwError } from 'rxjs';
 import { environment } from '../environments/environment';
 import { ICalendar } from '../interfaces/i-calendar';
 
@@ -20,18 +20,15 @@ export class FullCalendarService {
     console.log(this.myApiUrl)
     }
 
-    getAgenda(start?: string, end?: string): Observable<ICalendar[]> {
-      let params = '';
-      if (start && end) {
-        params = `?start=${start}&end=${end}`;
-      }
-
-      const apiUrl = `${this.myAppUrl}${this.myApiUrl}${params}`;
-      console.log('🔍 Cridant API:', apiUrl); // 👈 Això mostrarà l'URL complet
-
-      return this.http.get<ICalendar[]>(apiUrl);
+    getAgenda(): Observable<ICalendar[]> {
+      return this.http.get<ICalendar[]>(`${this.myAppUrl}${this.myApiUrl}`).pipe(
+        tap(events => console.log('📌 Resposta API:', events)), // DEBUG
+        catchError(error => {
+          console.error('❌ Error carregant API:', error);
+          return throwError(() => new Error('Error carregant els esdeveniments'));
+        })
+      );
     }
-
 
 
     addEvent(event: ICalendar): Observable<void> {

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Imembers } from '../../interfaces/imembers';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { MembersService } from '../../services/members.service';
+import { membersService } from '../../services/members.service';
 import { ProgressBarComponent } from '../../shared/progress-bar/progress-bar.component';
 import { ToastrService } from 'ngx-toastr';
 
@@ -11,7 +11,7 @@ import { ToastrService } from 'ngx-toastr';
   selector: 'app-members-list',
   standalone: true,
   imports: [CommonModule, RouterModule, ProgressBarComponent],
-  // providers: [MembersService],
+ providers: [membersService],
   templateUrl: './members-list.component.html',
   styleUrls: ['./members-list.component.css']
 })
@@ -19,8 +19,9 @@ import { ToastrService } from 'ngx-toastr';
 export class MembersListComponent implements OnInit {
   membersList: Imembers[] = [];
   loading: boolean = false;
+  members: Imembers[] | undefined;
 
-  constructor(private _membersService: MembersService, private toastr: ToastrService) { }
+  constructor(private membersService: membersService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.getListMembers();
@@ -28,21 +29,22 @@ export class MembersListComponent implements OnInit {
 
   getListMembers() {
       this.loading = true;
-      this._membersService.getListMembers().subscribe({
-        next: (data) =>{
-          this.membersList = data;
-          this.loading = false;
+      this.membersService.getListMembres().subscribe({
+        next: (members) => {
+          console.log('✅ Membres rebuts:', members);
+
+          // ❌ Excloem els membres que tenen totes les propietats null
+          this.members = members.filter(member => member.nom && member.cognom && member.rol && member.payroll);
+
+          console.log('✅ Membres filtrats:', this.members);
         },
-        error: (error) => {
-          console.log(error);
-          this.loading = false;
-        }
-    })
+        error: (err) => console.error('❌ Error carregant membres:', err)
+      });
   }
 
   deleteMember(id: number) {
     this.loading = true;
-    this._membersService.deleteMember(id).subscribe(() =>{
+    this.membersService.deleteMember(id).subscribe(() =>{
       this.getListMembers();
       this.toastr.warning('Membre esborrat amb èxit!', 'Membre esborrat');
     })
