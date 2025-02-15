@@ -1,59 +1,171 @@
-# InprocodeProject
+# Proyecto Angular + Node.js + Express + Sequelize
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.6.
+Este es un proyecto full-stack que consiste en un frontend desarrollado en Angular y un backend en Node.js con Express y Sequelize para la gestión de datos en una base de datos MySQL. Consiste en un crud en frontend, con creación de api y backend donde también se urtilizan los pluggins más comunes full-calendar, mapas y gráficos.
 
-## Development server
+Tecnologías utilizadas:
 
-To start a local development server, run:
+Frontend (Angular 19)
 
-```bash
-ng serve
-```
+Angular 19 (Standalone: true)
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Bootstrap para el diseño responsive /Estética: bootswatch/sketchy/
 
-## Code scaffolding
+Angular Material (Tema Rose Red)
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Leaflet para mapas
 
-```bash
-ng generate component component-name
-```
+ngx-toastr para notificaciones
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Consumo de APIs mediante HttpClient
 
-```bash
-ng generate --help
-```
+FullCalendar para la gestión de eventos
 
-## Building
+Chart.js para visualización de datos
 
-To build the project run:
+Backend (Node.js + Express)
 
-```bash
-ng build
-```
+Node.js
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Express.js
 
-## Running unit tests
+Sequelize (ORM para MySQL)
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+MySQL como base de datos
 
-```bash
-ng test
-```
+Dotenv para la gestión de variables de entorno
 
-## Running end-to-end tests
+CORS para el manejo de solicitudes entre dominios
 
-For end-to-end (e2e) testing, run:
+Instalación/configuración:
 
-```bash
-ng e2e
-```
+Backend
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Clonar el repositorio:
 
-## Additional Resources
+git clone [https://github.com/SandraBienert/inproCode-sprint-8-ClubTeatre-Angular.git]
+cd inproCode-project
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Desconectate de github, para no cambiar nada:
+git remote remove origin
+
+Instalar dependencias:
+
+npm install
+
+Configurar la base de datos en el archivo .env:
+
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=822025Clave%
+DB_NAME=membres
+
+Ejecutar migraciones con Sequelize:
+
+npx sequelize-cli db:migrate
+
+Iniciar el servidor:
+
+npm start
+
+Frontend
+
+Navegar al directorio del frontend y al backend:
+
+cd inprocode-project
+cd server
+
+Instalar dependencias:
+
+npm install
+
+Ejecutar el proyecto en modo desarrollo:
+
+ng serve -o
+nodemon dist/index.js
+
+Para producción:
+
+npm run build
+
+Endpoints del Backend
+
+GET /membres: Obtener la lista de miembros.
+
+POST /membres: Crear un nuevo miembro.
+
+PUT /membres/:id: Actualizar un miembro existente.
+
+DELETE /membres/:id: Eliminar un miembro.
+
+GET /calendari_debuts: Obtener eventos de FullCalendar.
+
+Configuración de Angular
+
+El proyecto está configurado con las siguientes características:
+
+outputPath: dist/inprocode-project
+
+Estilos:
+
+@angular/material/prebuilt-themes/rose-red.css
+
+src/styles.css
+
+bootstrap.min.css
+
+leaflet.css
+
+ngx-toastr/toastr.css
+
+Scripts:
+
+jquery.min.js
+
+popper.min.js
+
+bootstrap.min.js
+
+Dependencias principales:
+
+@angular/animations, @angular/cdk, @angular/core, @angular/forms
+
+@fullcalendar/angular, @fullcalendar/core, @fullcalendar/daygrid, @fullcalendar/interaction, @fullcalendar/list
+
+chart.js, rxjs, zone.js
+
+bootstrap, jquery, leaflet, ngx-toastr
+
+Configuraciones de build y serve:
+
+npm start usa la configuración de desarrollo por defecto.
+
+npm run build genera una versión optimizada.
+
+npm run watch reconstruye en modo desarrollo al detectar cambios.
+
+Configuración del Backend
+
+Dependencias principales:
+
+express, sequelize, mysql2, cors, dotenv
+
+DevDependencies:
+
+@types/cors, @types/express, @types/mysql
+
+Scripts disponibles:
+
+npm start: Inicia el servidor
+
+npm test: Ejecuta pruebas (actualmente no configurado)
+
+Estilos:
+bootswatch.com/sketchy/
+
+Autores
+
+Sandra Bienert
+
+Licencia
+
+Este proyecto está bajo la licencia MIT.
