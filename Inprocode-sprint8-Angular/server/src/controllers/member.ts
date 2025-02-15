@@ -47,18 +47,26 @@ export const getMember = async (req: Request, res: Response) => { //un sol membr
     }
 
 export const postMember = async (req: Request, res: Response) => { //crear un membre
-    const { body } = req;
-        try{
-                await Member.create(body);
-                res.json({
-                msg: 'Membre creat correctament',
-            });
-            } catch (error) {
-            res.status(500).json({
-                msg: 'Error al crear el membre',
-                error,
-            });
-}
+    const { nom, cognom, rol, payroll } = req.body;
+    console.log('Datos recibidos para crear el miembro:', req.body); // Afegeix aquest log
+    try {
+       const member = await Member.create({
+        nom,
+        cognom,
+        rol,
+        payroll,
+       });
+        res.json({
+            msg: 'Membre creat correctament',
+
+        });
+    } catch (error) {
+        console.error('Error al crear el membre:', error); // Afegeix aquest log també
+        res.status(500).json({
+            msg: 'Error al crear el membre',
+            error,
+        });
+    }
 }
 
  export const updateMember = async (req: Request, res: Response) => {  //Editar un membre o actualitzar

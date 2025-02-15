@@ -34,8 +34,8 @@ export class membersService {
     return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}${id}`);
 }
 
-saveMember(member: Imembers): Observable<void> {
-  return this.http.post<void>(`${this.myAppUrl}${this.myApiUrl}`, member);
+saveMember(member: Imembers): Observable<Imembers> {
+  return this.http.post<Imembers>(`${this.myAppUrl}${this.myApiUrl}`, member);
 }
 
 getMember(id: number): Observable<Imembers> {

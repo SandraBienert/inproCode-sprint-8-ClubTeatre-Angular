@@ -17,9 +17,10 @@ import { ToastrService } from 'ngx-toastr';
 })
 
 export class MembersListComponent implements OnInit {
-  membersList: Imembers[] = [];
+  members: Imembers[] = [];
+  membersFiltered: any[] = [];
   loading: boolean = false;
-  members: Imembers[] | undefined;
+
 
   constructor(private membersService: membersService, private toastr: ToastrService) { }
 
@@ -33,10 +34,11 @@ export class MembersListComponent implements OnInit {
         next: (members) => {
           console.log('✅ Membres rebuts:', members);
 
-          // ❌ Excloem els membres que tenen totes les propietats null
-          this.members = members.filter(member => member.nom && member.cognom && member.rol && member.payroll);
+          this.members = members;
+          this.membersFiltered = members.filter(m => m.nom && m.cognom && m.rol && m.payroll);;
 
-          console.log('✅ Membres filtrats:', this.members);
+          console.log('✅ Membres filtrats:', this.membersFiltered);
+          this.loading = false;
         },
         error: (err) => console.error('❌ Error carregant membres:', err)
       });

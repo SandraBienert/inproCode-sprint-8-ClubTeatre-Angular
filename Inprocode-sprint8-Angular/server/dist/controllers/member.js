@@ -54,14 +54,21 @@ const deleteMember = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
 });
 exports.deleteMember = deleteMember;
 const postMember = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { body } = req;
+    const { nom, cognom, rol, payroll } = req.body;
+    console.log('Datos recibidos para crear el miembro:', req.body); // Afegeix aquest log
     try {
-        yield member_1.default.create(body);
+        const member = yield member_1.default.create({
+            nom,
+            cognom,
+            rol,
+            payroll,
+        });
         res.json({
             msg: 'Membre creat correctament',
         });
     }
     catch (error) {
+        console.error('Error al crear el membre:', error); // Afegeix aquest log també
         res.status(500).json({
             msg: 'Error al crear el membre',
             error,

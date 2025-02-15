@@ -31,7 +31,7 @@ export class CrudMembersComponent implements OnInit {
         nom: ['', Validators.required],
         cognom: ['', Validators.required],
         rol:[ '', Validators.required],
-        payroll: [null, Validators.required],
+        payroll: [0, Validators.required],
       });
       this.id = Number( aRouter.snapshot.paramMap.get('id'));
   }
@@ -68,11 +68,11 @@ export class CrudMembersComponent implements OnInit {
 
   addMember() {
     const member : Imembers = {
-      id: this.id,
       nom: this.form.get('nom')?.value,
       cognom: this.form.get('cognom')?.value,
       rol: this.form.get('rol')?.value,
       payroll: this.form.get('payroll')?.value,
+      id: 0
     }
 
     this.loading = true;
@@ -92,7 +92,5 @@ export class CrudMembersComponent implements OnInit {
     });
 
   }
-
-
 }
 }
