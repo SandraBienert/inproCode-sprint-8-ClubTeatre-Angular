@@ -1,7 +1,7 @@
 import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import routesMember from '../routes/member';
-import db from '../db/connection';
+import db from '../db/connection'
 
 
 class Server {
