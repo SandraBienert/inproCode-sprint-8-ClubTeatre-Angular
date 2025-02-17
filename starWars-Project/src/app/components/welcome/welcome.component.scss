@@ -1,0 +1,30 @@
+
+.container-fluid{
+  width: 100vw;  /* 100% de l'amplada de la finestra del navegador */
+  height: 100vh; /* 100% de l'alçada de la finestra del navegador */
+  background-image: url( "/assets/star-wars-spaceship.png");
+  color: yellow;
+  font-family: "Noto Sans", serif;
+  height: 100vh;
+}
+
+.text-center.pt-5 {
+  -webkit-text-stroke: 1px black;
+}
+
+
+#background{
+  padding-top: 100px;
+  display: flex; /* Si vols alinear els botons */
+  justify-content: space-around; /* Centra horitzontalment */
+  align-items: center;
+}
+
+
+a{
+  text-decoration: none;
+}
+
+.btn.btn-warning{
+  border: 1px black solid;
+}

@@ -1,0 +1,39 @@
+<div class="background-container">
+<div class="d-flex justify-content-center">
+  <div class="container">
+    <div class="text-center">
+    <hr class="text-white my-1"/>
+    <h2 class="text-start py-2 ps-3">Starship</h2>
+    <hr class="text-white my-1"/>
+    </div>
+    <div *ngIf ="starship" class="row pt-4 d-flex align-items-center">
+   <div class="col-md-6 d-flex">
+        <h1 class="mb-3">{{starship.name}}</h1>
+      </div>
+      <div class="datos-container">
+      <div class="row d-flex">
+        <div class="col-6 pt-4" id="datos">
+          <p><strong>Name:</strong> {{starship.name}}</p>
+          <p><strong>Model:</strong> {{starship.model}}</p>
+          <p><strong>Manufacturer:</strong> {{starship.manufacturer}}</p>
+          <p><strong>Length:</strong> {{starship.length}}</p>
+          <p><strong>Crew:</strong> {{starship.crew}}</p>
+          <p><strong>Passengers:</strong> {{starship.passengers}}</p>
+      </div>
+      <div class="col-6 pt-4" id="datos2">
+          <p><strong>Capacidad:</strong> {{starship.cargo_capacity}}</p>
+          <p><strong>Consumables:</strong> {{starship.consumables}}</p>
+          <p><strong>Starship Class:</strong> {{starship.starship_class}}</p>
+          <p><strong>Created:</strong> {{starship.created}}</p>
+          <p><strong>Edited:</strong> {{starship.edited}}</p>
+          <p><strong>url:</strong> {{starship.url}}</p>
+        </div>
+      </div>
+      <div class="col-md-6 mt-5 text-center">
+        <img [src]= "getStarshipImage()" alt="{{starship.name}}"
+        class="img-fluid"/>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>

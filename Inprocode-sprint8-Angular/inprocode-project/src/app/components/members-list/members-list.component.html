@@ -1,0 +1,35 @@
+
+<app-progress-bar *ngIf="loading"></app-progress-bar>
+<div *ngIf="!loading" class="container mt-3 pt-4">
+  <div class="title pt-2">
+    <h2 class="h2">Llistat de membres de la C&A</h2>
+    <button type="button" class="btn btn-info" [routerLink]="['/crud-members']">Agregar Membre</button>
+  </div>
+
+<table *ngIf="membersFiltered.length > 0" class="table table-hover mt-3">
+  <thead>
+    <tr class="table-dark">
+      <th class="h4 ps-4"scope="col">Id:</th>
+      <th class="h4 ps-4" scope="col">Nom:</th>
+      <th class="h4 ps-4" scope="col">Cognom:</th>
+      <th class="h4 ps-4" scope="col">Rol C&A:</th>
+      <th class="h4 ps-4" scope="col">Nómina:</th>
+      <th class="h4 ps-4" scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let member of membersFiltered" class="table-active">
+      <td class="ps-4">{{member.nom}}</td>
+      <td class="ps-4">{{member.cognom}}</td>
+      <td class="ps-4">{{member.rol}}</td>
+      <td class="ps-4">{{member.payroll}}€</td>
+      <td class="ps-4">
+        <button [routerLink]="['/edit', member.id]" type="button" class="btn btn-secondary btn-sm ms-3">Editar</button>
+        <button (click)="deleteMember(member.id!)" type="button" class="btn btn-danger btn-sm ms-3">Eliminar</button>
+      </td>
+    </tr>
+    <tr>
+  </tbody>
+</table>
+<h5 *ngIf="membersFiltered.length == 0">No n'hi ha cap membre per mostrar</h5>
+</div>
