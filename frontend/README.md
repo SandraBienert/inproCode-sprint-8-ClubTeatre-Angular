@@ -1,7 +1,6 @@
-# Proyecto INPROCODE-sprint 8 Angular + Node.js + Express + Sequelize
+# Proyecto Angular + Node.js + Express + Sequelize
 
-Este es un proyecto full-stack que consiste en un frontend desarrollado en Angular y un backend en Node.js con Express y Sequelize para la gestión de datos en una base de datos MySQL. 
-Consiste en un crud en frontend, con creación de api y backend donde también se urtilizan los pluggins más comunes full-calendar, mapas y gráficos.
+Este es un proyecto full-stack que consiste en un frontend desarrollado en Angular y un backend en Node.js con Express y Sequelize para la gestión de datos en una base de datos MySQL. Consiste en un crud en frontend, con creación de api y backend donde también se urtilizan los pluggins más comunes full-calendar, mapas y gráficos.
 
 Tecnologías utilizadas:
 
