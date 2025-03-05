@@ -6,6 +6,7 @@ import { routes } from './app/app.routes';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideToastr } from 'ngx-toastr';
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
 bootstrapApplication(AppComponent, {
     ...appConfig,
@@ -18,5 +19,6 @@ bootstrapApplication(AppComponent, {
           positionClass: 'toast-bottom-right',
           preventDuplicates: true,
         }),
+        provideCharts(withDefaultRegisterables())
     ]
 }).catch((err) => console.error(err));
