@@ -5,3 +5,11 @@ full-calendar {
   margin: 30px;
   height: 100vh;
 }
+
+.event-text-center .fc-event-title {
+  text-align: center; /* Centra el text horitzontalment */
+  display: flex;
+  align-items: center; /* Centra el text verticalment */
+  justify-content: center; /* Centra el text horitzontalment */
+  height: 100%; /* Assegura que l'event ocupi tota l'alçada */
+}

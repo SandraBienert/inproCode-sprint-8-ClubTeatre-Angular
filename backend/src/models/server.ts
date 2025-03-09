@@ -43,7 +43,7 @@ class Server {
         try {
         const [results] = await db.query(`
           SELECT id, titol_event AS titol, lloc_event AS lloc, data_event AS data 
-          FROM membres.calendari_debuts
+          FROM calendari_debuts
         `); 
           res.json(results);
             } catch (error) {

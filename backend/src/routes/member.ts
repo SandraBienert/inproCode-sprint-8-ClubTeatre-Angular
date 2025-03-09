@@ -16,6 +16,7 @@ router.delete('/:id', (req, res, next) => {
 
 router.get('api/map', getMapTeatres);
 router.get('api/full-calendar', getAgenda);
+// router.get('api/grafics', getGrafics);
 
 
 export default router;  
