@@ -1,0 +1,13 @@
+
+<div>
+  <h2>Afegir Event</h2>
+  <form (ngSubmit)="addEvent()">
+    <label for="title">Títol:</label>
+    <input type="text" id="title" [(ngModel)]="newEventTitle" name="title" required />
+
+    <label for="date">Data:</label>
+    <input type="date" id="date" [(ngModel)]="newEventDate" name="date" required />
+
+    <button type="submit">Afegir Event</button>
+  </form>
+</div>
