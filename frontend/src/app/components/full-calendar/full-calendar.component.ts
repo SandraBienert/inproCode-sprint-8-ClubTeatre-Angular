@@ -4,7 +4,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
 import bootstrap5Plugin from '@fullcalendar/bootstrap5';
 import listPlugin from '@fullcalendar/list';
-import { FullCalendarComponent, FullCalendarModule } from '@fullcalendar/angular';
+import { FullCalendarModule } from '@fullcalendar/angular';
 import { FullCalendarService } from '../../services/full-calendar.service';
 import { ICalendar } from '../../interfaces/i-calendar';
 import { AddEventCalendarComponent } from '../add-event-calendar/add-event-calendar.component';
@@ -12,7 +12,7 @@ import { AddEventCalendarComponent } from '../add-event-calendar/add-event-calen
 @Component({
   selector: 'app-full-calendar',
   standalone: true,
-  imports: [FullCalendarModule, AddEventCalendarComponent],
+  imports: [ FullCalendarModule, AddEventCalendarComponent],
   templateUrl: './full-calendar.component.html',
   styleUrls: ['./full-calendar.component.css'],
 })

@@ -7,7 +7,8 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-add-event-calendar',
-  imports: [CommonModule, FormsModule],
+  standalone: true,
+  imports: [FormsModule],
   templateUrl: './add-event-calendar.component.html',
   styleUrl: './add-event-calendar.component.css'
 })
