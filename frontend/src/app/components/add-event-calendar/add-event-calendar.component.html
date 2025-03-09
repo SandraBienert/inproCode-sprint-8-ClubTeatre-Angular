@@ -5,7 +5,10 @@
       <mat-label>Títol</mat-label>
       <input matInput [(ngModel)]="newEventTitle" name="title" required />
     </mat-form-field>
-
+    <mat-form-field appearance="fill">
+      <mat-label>Lloc</mat-label>
+      <input matInput [(ngModel)]="newEventLocation" name="location" required />
+    </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Data</mat-label>
       <input matInput type="date" [(ngModel)]="newEventDate" name="date" required />
@@ -13,6 +16,16 @@
   </form>
 </mat-dialog-content>
 <mat-dialog-actions>
+  <!-- Botó per eliminar (només en mode edició) -->
+  <button *ngIf="isEditMode" mat-button (click)="deleteEvent()" color="warn">
+    Eliminar
+  </button>
+
+  <!-- Botó per cancel·lar -->
   <button mat-button (click)="onCancel()">Cancel·lar</button>
-  <button mat-button (click)="addEvent()" color="primary">Afegir</button>
+
+  <!-- Botó per guardar (afegir o editar) -->
+  <button mat-button (click)="saveEvent()" color="primary">
+    {{ isEditMode ? 'Guardar Canvis' : 'Afegir' }}
+  </button>
 </mat-dialog-actions>

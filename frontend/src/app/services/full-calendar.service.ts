@@ -30,9 +30,8 @@ export class FullCalendarService {
       );
     }
 
-
-    addEvent(event: ICalendar): Observable<void> {
-      return this.http.post<void>(`${this.myAppUrl}${this.myApiUrl}`, event);
+    addEvent(event: ICalendar): Observable<any> {
+      return this.http.post<ICalendar[]>(`${this.myAppUrl}${this.myApiUrl}/events`, event); // Envia l'objecte event amb el lloc
     }
 
 

@@ -9,11 +9,12 @@ import { FullCalendarService } from '../../services/full-calendar.service';
 import { ICalendar } from '../../interfaces/i-calendar';
 import { AddEventCalendarComponent } from '../add-event-calendar/add-event-calendar.component';
 import { MatDialog } from '@angular/material/dialog';
+import { CommonModule  } from '@angular/common';
 
 @Component({
   selector: 'app-full-calendar',
   standalone: true,
-  imports: [ FullCalendarModule],
+  imports: [CommonModule, FullCalendarModule],
   templateUrl: './full-calendar.component.html',
   styleUrls: ['./full-calendar.component.css'],
 })
@@ -83,4 +84,57 @@ export class AppFullCalendarComponent  {
       });
     }
   }
+
+  // Obrir el diàleg per afegir un esdeveniment nou
+openAddEventDialog(date: string): void {
+  const dialogRef = this.dialog.open(AddEventCalendarComponent, {
+    width: '400px',
+    data: { date }, // Passa la data seleccionada
+  });
+
+  dialogRef.afterClosed().subscribe((result: ICalendar) => {
+    if (result) {
+      this.fullCalendarService.addEvent(result).subscribe({
+        next: () => {
+          console.log('✅ Event afegit correctament');
+          this.refreshEvents();
+        },
+        error: (err) => console.error('❌ Error afegint event:', err),
+      });
+    }
+  });
+}
+  refreshEvents() {
+    throw new Error('Method not implemented.');
+  }
+
+// Obrir el diàleg per editar un esdeveniment existent
+openEditEventDialog(event: ICalendar): void {
+  const dialogRef = this.dialog.open(AddEventCalendarComponent, {
+    width: '400px',
+    data: event, // Passa l'esdeveniment existent
+  });
+
+  dialogRef.afterClosed().subscribe((result: any) => {
+    if (result && result.delete) {
+      // Eliminar l'esdeveniment
+      this.fullCalendarService.deleteEvent(result.id).subscribe({
+        next: () => {
+          console.log('✅ Event eliminat correctament');
+          this.refreshEvents();
+        },
+        error: (err) => console.error('❌ Error eliminant event:', err),
+      });
+    } else if (result) {
+      // Editar l'esdeveniment
+      this.fullCalendarService.addEvent(result).subscribe({
+        next: () => {
+          console.log('✅ Event actualitzat correctament');
+          this.refreshEvents();
+        },
+        error: (err) => console.error('❌ Error actualitzant event:', err),
+      });
+    }
+  });
+}
 }
