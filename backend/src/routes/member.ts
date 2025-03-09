@@ -16,6 +16,11 @@ router.delete('/:id', (req, res, next) => {
 
 router.get('api/map', getMapTeatres);
 router.get('api/full-calendar', getAgenda);
+// Rutes per als esdeveniments
+router.get('api/full-calendar/events', EventController.getEvents); // Obtenir tots els esdeveniments
+router.post('api/full-calendar/events', EventController.addEvent); // Afegir un nou esdeveniment
+router.delete('api/fullcalendar/events/:id', EventController.deleteEvent); // Eliminar un esdeveniment
+
 // router.get('api/grafics', getGrafics);
 
 
