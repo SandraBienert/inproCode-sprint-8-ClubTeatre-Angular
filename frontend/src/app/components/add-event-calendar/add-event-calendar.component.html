@@ -1,13 +1,18 @@
-
-<div>
-  <h2>Afegir Event</h2>
+<h2 mat-dialog-title>Afegir Event</h2>
+<mat-dialog-content>
   <form (ngSubmit)="addEvent()">
-    <label for="title">Títol:</label>
-    <input type="text" id="title" [(ngModel)]="newEventTitle" name="title" required />
+    <mat-form-field appearance="fill">
+      <mat-label>Títol</mat-label>
+      <input matInput [(ngModel)]="newEventTitle" name="title" required />
+    </mat-form-field>
 
-    <label for="date">Data:</label>
-    <input type="date" id="date" [(ngModel)]="newEventDate" name="date" required />
-
-    <button type="submit">Afegir Event</button>
+    <mat-form-field appearance="fill">
+      <mat-label>Data</mat-label>
+      <input matInput type="date" [(ngModel)]="newEventDate" name="date" required />
+    </mat-form-field>
   </form>
-</div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancel·lar</button>
+  <button mat-button (click)="addEvent()" color="primary">Afegir</button>
+</mat-dialog-actions>

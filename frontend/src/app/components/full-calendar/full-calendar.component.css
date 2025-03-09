@@ -6,7 +6,7 @@ full-calendar {
   height: 100vh;
 }
 
-.event-text-center .fc-event-title {
+.event-text-center{
   text-align: center; /* Centra el text horitzontalment */
   display: flex;
   align-items: center; /* Centra el text verticalment */

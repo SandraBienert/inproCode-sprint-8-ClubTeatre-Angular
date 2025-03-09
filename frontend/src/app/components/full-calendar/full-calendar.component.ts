@@ -8,11 +8,12 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import { FullCalendarService } from '../../services/full-calendar.service';
 import { ICalendar } from '../../interfaces/i-calendar';
 import { AddEventCalendarComponent } from '../add-event-calendar/add-event-calendar.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-full-calendar',
   standalone: true,
-  imports: [ FullCalendarModule, AddEventCalendarComponent],
+  imports: [ FullCalendarModule],
   templateUrl: './full-calendar.component.html',
   styleUrls: ['./full-calendar.component.css'],
 })
@@ -21,6 +22,7 @@ export class AppFullCalendarComponent  {
     initialView: 'dayGridMonth',
     plugins: [dayGridPlugin, interactionPlugin, bootstrap5Plugin, listPlugin],
     themeSystem: 'bootstrap5',
+    dateClick: (arg: DateClickArg) => this.handleDateClick(arg),
     eventClick: (clickInfo: EventClickArg) => this.handleEventClick(clickInfo),
     events: (fetchInfo, successCallback, failureCallback) => {
       this.fullCalendarService.getAgenda().subscribe({
@@ -29,13 +31,12 @@ export class AppFullCalendarComponent  {
             id: event.id.toString(),
             title: event.titol,
             start: new Date(event.data).toISOString(),
-            backgroundColor: 'purple',
-            borderColor: 'rgb(100, 20, 50)',
-            textColor: 'white',
+            backgroundColor: 'rgba(220, 53, 69, 1)',
+            borderColor: '#d9534f',
+            textColor: 'black',
             display: 'block',
-            className: 'event-text-center', // Assigna una classe personalitzada
+            className: 'event-text-center',
           }));
-          console.log('🔍 Esdeveniments carregats:', formattedEvents);
           successCallback(formattedEvents);
         },
         error: (error) => {
@@ -46,19 +47,30 @@ export class AppFullCalendarComponent  {
     },
   };
 
-  constructor(private fullCalendarService: FullCalendarService) {}
+  constructor(private fullCalendarService: FullCalendarService, private dialog: MatDialog) {}
 
-  // Funció per gestionar l'event emès per AddEventCalendarComponent
-  onEventAdded(newEvent: ICalendar): void {
-    this.fullCalendarService.addEvent(newEvent).subscribe({
-      next: () => {
-        console.log('✅ Event afegit correctament');
-        this.calendarOptions.events = []; // Força la recàrrega dels events
-      },
-      error: (err) => console.error('❌ Error afegint event:', err),
+
+  // Funció per gestionar el clic a un dia
+  handleDateClick(arg: DateClickArg): void {
+    const dialogRef = this.dialog.open(AddEventCalendarComponent, {
+      width: '400px',
+      data: { date: arg.dateStr }, // Passa la data seleccionada al modal
+    });
+
+    dialogRef.afterClosed().subscribe((result: ICalendar) => {
+      if (result) {
+        this.fullCalendarService.addEvent(result).subscribe({
+          next: () => {
+            console.log('✅ Event afegit correctament');
+            this.calendarOptions.events = []; // Força la recàrrega dels events
+          },
+          error: (err) => console.error('❌ Error afegint event:', err),
+        });
+      }
     });
   }
 
+  // Funció per eliminar un event
   handleEventClick(clickInfo: EventClickArg): void {
     if (confirm(`Eliminar "${clickInfo.event.title}"?`)) {
       const eventId = Number(clickInfo.event.id);

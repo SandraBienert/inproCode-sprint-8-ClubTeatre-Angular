@@ -1,28 +1,10 @@
-
-form {
-  margin-bottom: 20px;
+/* Estils bàsics per al modal */
+.mat-dialog-container {
+  padding: 20px;
+  border-radius: 8px;
 }
 
-label {
-  display: block;
-  margin-top: 10px;
-}
-
-input {
+.mat-form-field {
   width: 100%;
-  padding: 8px;
-  margin-top: 5px;
-}
-
-button {
-  margin-top: 10px;
-  padding: 10px 20px;
-  background-color: purple;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: rgb(100, 20, 50);
+  margin-bottom: 16px;
 }

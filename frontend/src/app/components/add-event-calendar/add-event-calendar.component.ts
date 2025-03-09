@@ -1,14 +1,15 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Output } from '@angular/core';
 import { ICalendar } from '../../interfaces/i-calendar';
-import { FullCalendarService } from '../../services/full-calendar.service';
-import { EventClickArg } from '@fullcalendar/core/index.js';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-add-event-calendar',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatDialogModule],
   templateUrl: './add-event-calendar.component.html',
   styleUrl: './add-event-calendar.component.css'
 })
@@ -16,7 +17,12 @@ export class AddEventCalendarComponent {
   newEventTitle: string = ''; // Títol del nou event
   newEventDate: string = ''; // Data del nou event
 
-  @Output() eventAdded = new EventEmitter<ICalendar>(); // Emet un event quan s'afegeix un nou event
+  constructor(
+    public dialogRef: MatDialogRef<AddEventCalendarComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { date: string } // Rep la data seleccionada
+  ) {
+    this.newEventDate = data.date; // Assigna la data seleccionada al camp del formulari
+  }
 
   // Funció per afegir un event
   addEvent(): void {
@@ -27,13 +33,15 @@ export class AddEventCalendarComponent {
         lloc: '', // Pots afegir més camps si és necessari
         data: this.newEventDate,
       };
-
-      this.eventAdded.emit(newEvent); // Emet el nou event
-      this.newEventTitle = ''; // Neteja el camp del títol
-      this.newEventDate = ''; // Neteja el camp de la data
+      this.dialogRef.close(newEvent); // Tanca el modal i retorna l'event
     } else {
       alert('Si us plau, omple tots els camps.');
     }
+  }
+
+  // Funció per cancel·lar
+  onCancel(): void {
+    this.dialogRef.close(); // Tanca el modal sense fer res
   }
 }
 
