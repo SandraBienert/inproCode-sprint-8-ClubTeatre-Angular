@@ -26,8 +26,7 @@ class Server {
     routes() {
         this.app.get('/', (req: Request, res: Response) => { 
             res.json({ msg: 'API working',});
-    })
-        this.app.use('/api/members', routesMember);
+    });
     
         this.app.get('/api/map', (req: Request, res: Response) => {
            db.query('SELECT nom, adreça, latitud, longitud FROM membres.teatres_bcn')
@@ -51,13 +50,50 @@ class Server {
           res.status(500).json({ error: 'Error en la consulta', details: error });
   }
 });
-}
+  
+      this.app.post('/api/full-calendar/events', async (req: Request, res: Response) => {
+        const { titol, lloc, data } = req.body;
+        try {
+          await db.query(`
+            INSERT INTO calendari_debuts (titol_event, lloc_event, data_event)
+            VALUES (titol_event, lloc_event, data_event)`);
+          res.status(201).json({ message: 'Event creat correctament' });
+        } catch (error) {
+          console.error('Error en la consulta:', error);
+          res.status(500).json({ error: 'Error en la consulta', details: error });
+        }
+      });
 
+      this.app.delete('/api/full-calendar/events/:id', async (req: Request, res: Response) => {
+        const { id } = req.params;
+        try {
+          await db.query(`
+            DELETE FROM calendari_debuts WHERE id = ?`, { replacements: [id] });
+          res.json({ message: 'Event Esborrat Correctament' });
+        } catch (error) {
+          console.error('Error en la consulta:', error);
+          res.status(500).json({ error: 'Error en la consulta', details: error });
+    }
+  });
+}
         midlewares() {
             this.app.use(express.json());//parseamos el body a json
-            //cors: para permitir peticiones de otros dominios
             this.app.use(cors());
-        }
+            this.app.use('api/full-calendar', (req: Request, res: Response) => { 
+              res.json({ msg: 'API Event Working' });
+            });
+            this.app.use('api/full-calendar/events', (req: Request, res: Response) => { 
+              res.json({ msg: 'API Event Working' });
+            });
+            this.app.use('api/full-calendar/events/:id', (req: Request, res: Response) => {
+              res.json({ msg: 'API event working' });
+            });
+            this.app.use('api/map', (req: Request, res: Response) => {
+              res.json({ msg: 'API working' });
+            });
+            this.app.use('/api/members', routesMember);
+        } 
+
 
         async dbConnect(){
 

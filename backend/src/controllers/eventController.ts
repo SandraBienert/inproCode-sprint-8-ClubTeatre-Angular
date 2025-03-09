@@ -1,39 +1,26 @@
-import { Event } from '../models/calendari';
-import { Model, DataTypes } from 'sequelize';
-import { Request, Response } from 'express';
+import { Event } from '../models/eventsModel';
+import { Request, Response, NextFunction } from 'express';
 
-const EventController = {
-  // Obtenir tots els esdeveniments
-  getEvents: async (req, res) => {
-    try {
-      const events = await Event.findAll();
-      res.json(events);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  },
 
-  // Afegir un nou esdeveniment
-  addEvent: async (req, res) => {
+export const addEvent = async (req: Request, res: Response): Promise<void> => {
     try {
-      const { titol, data, descripcio } = req.body;
-      const newEvent = await Event.create({ titol, data, descripcio });
+      const { titol_event, lloc_event, data_event } = req.body;
+      const newEvent = await Event.create({ titol_event, lloc_event, data_event });
       res.status(201).json(newEvent);
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      res.status(500).json({ error: (error as Error).message });
     }
-  },
+  };
 
   // Eliminar un esdeveniment
-  deleteEvent: async (req, res) => {
+ export const  deleteEvent = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { id } = req.params;
       await Event.destroy({ where: { id } });
       res.status(204).send(); // 204: No Content
     } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  },
-};
+      next(error); // Manejo de errores
+}
+  };
 
-module.exports = EventController;
+

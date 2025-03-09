@@ -34,7 +34,6 @@ class Server {
         this.app.get('/', (req, res) => {
             res.json({ msg: 'API working', });
         });
-        this.app.use('/api/members', member_1.default);
         this.app.get('/api/map', (req, res) => {
             connection_1.default.query('SELECT nom, adreça, latitud, longitud FROM membres.teatres_bcn')
                 .then((results) => {
@@ -48,9 +47,34 @@ class Server {
             try {
                 const [results] = yield connection_1.default.query(`
           SELECT id, titol_event AS titol, lloc_event AS lloc, data_event AS data 
-          FROM membres.calendari_debuts
+          FROM calendari_debuts
         `);
                 res.json(results);
+            }
+            catch (error) {
+                console.error('Error en la consulta:', error);
+                res.status(500).json({ error: 'Error en la consulta', details: error });
+            }
+        }));
+        this.app.post('/api/full-calendar/events', (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const { titol, lloc, data } = req.body;
+            try {
+                yield connection_1.default.query(`
+            INSERT INTO calendari_debuts (titol_event, lloc_event, data_event)
+            VALUES (titol_event, lloc_event, data_event)`);
+                res.status(201).json({ message: 'Event creat correctament' });
+            }
+            catch (error) {
+                console.error('Error en la consulta:', error);
+                res.status(500).json({ error: 'Error en la consulta', details: error });
+            }
+        }));
+        this.app.delete('/api/full-calendar/events/:id', (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.params;
+            try {
+                yield connection_1.default.query(`
+            DELETE FROM calendari_debuts WHERE id = ?`, { replacements: [id] });
+                res.json({ message: 'Event Esborrat Correctament' });
             }
             catch (error) {
                 console.error('Error en la consulta:', error);
@@ -60,8 +84,20 @@ class Server {
     }
     midlewares() {
         this.app.use(express_1.default.json()); //parseamos el body a json
-        //cors: para permitir peticiones de otros dominios
         this.app.use((0, cors_1.default)());
+        this.app.use('api/full-calendar', (req, res) => {
+            res.json({ msg: 'API Event Working' });
+        });
+        this.app.use('api/full-calendar/events', (req, res) => {
+            res.json({ msg: 'API Event Working' });
+        });
+        this.app.use('api/full-calendar/events/:id', (req, res) => {
+            res.json({ msg: 'API event working' });
+        });
+        this.app.use('api/map', (req, res) => {
+            res.json({ msg: 'API working' });
+        });
+        this.app.use('/api/members', member_1.default);
     }
     dbConnect() {
         return __awaiter(this, void 0, void 0, function* () {
